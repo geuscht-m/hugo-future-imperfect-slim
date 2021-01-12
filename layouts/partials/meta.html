@@ -15,3 +15,10 @@
   <meta name="msapplication-TileColor" content="{{ .Site.Params.meta.msColor }}">
   <meta name="theme-color" content="{{ .Site.Params.meta.iOSColor }}">
 {{ end }}
+<!-- Various site verification snippets -->
+{{ if .Site.Params.meta.googleSiteVerify }}
+  <meta name="google-site-verification" content="{{ .Site.Params.meta.googleSiteVerify }}">
+{{ end }}
+{{ if .Site.Params.meta.bingSiteVerify }}
+  <meta name="msvalidate.01" content="{{ .Site.Params.meta.bingSiteVerify }}">
+{{ end }}
