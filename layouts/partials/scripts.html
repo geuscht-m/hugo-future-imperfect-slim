@@ -42,7 +42,9 @@
       {{- end -}}
       {{- $js := $jsSlice | resources.Concat "js/bundle.js" | minify | fingerprint -}}
     <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
-    <script src="{{ "js/add-on.js" | relURL }}"></script>
+    {{- if (fileExists "js/add-on.js") -}}
+      <script src="{{ "js/add-on.js" | relURL }}"></script>
+    {{- end -}}
     {{- else }}
       <script src="{{ . | relURL }}"></script>
     {{- end -}}
