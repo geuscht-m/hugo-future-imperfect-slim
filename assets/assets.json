@@ -3,12 +3,10 @@
       "css/normalize.css",
       "css/fonts.css",
       "css/academicons.css",
-      "css/fontawesome.css",
-      "css/fancybox.css"
+      "css/fontawesome.css"
    ],
    "scripts" : [
       "js/jquery-3.5.1.js",
-      "js/fancybox.js",
       "js/lunr.js",
       "js/util.js"
    ]
