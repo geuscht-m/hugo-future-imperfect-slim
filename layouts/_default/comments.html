@@ -100,9 +100,9 @@
     </div>
   </article>
 {{/* Add support for ISSO comment system */}}
-{{ else if .Site.Params.DataIsso }}
+{{ else if .Site.Params.isso.enabled }}
   <article class="post">
-    <script data-isso="{{ .Site.Params.DataIsso }}" src="{{ .Site.Params.DataIssoJsLocation }}"></script>
+    <script data-isso="{{ .Site.Params.isso.data }}" data-isso-require-author="{{ .Site.Params.isso.requireAuthor }}" data-isso-require-email="{{ .Site.Params.isso.requireEmail }}" data-isso-reply-notifications="{{ .Site.Params.isso.replyNotification }}" src="{{ .Site.Params.isso.jsLocation }}"></script>
     <noscript>Please enable JavaScript to view the comments powered by <a href="https://posativ.org/isso/">Isso</a>.</noscript>
     <div>
       <section id="isso-thread"></section>

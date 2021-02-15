@@ -22,6 +22,7 @@ on the Hugo Theme Showcase.
 	- [exampleSite](#examplesite)
 	- [config.toml](#configtoml)
 	- [Staticman](#staticman)
+    - [Isso](#isso)
 	- [Hugo's Built-In Server](#hugos-built-in-server)
 - [Shortcodes](#shortcodes)
 - [About the Author](#about-the-author)
@@ -155,6 +156,11 @@ your project.
 
 For details on the Staticman, please refer to the
 [wiki page](https://github.com/pacollins/hugo-future-imperfect-slim/wiki/staticman.yml)
+
+### Isso
+
+If you would like comments via [Isso](https://posativ.org/isso/), you'll need to provide
+basic configuration parameters in your config.toml and configure Isso on your server.
 
 ### Custom JavaScript and CSS
 
