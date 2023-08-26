@@ -40,13 +40,8 @@
       {{- if or $.Site.Params.staticman.enabled $.Site.Params.staticman.staticman -}}
         {{- $jsSlice = $jsSlice | append (resources.Get "js/staticman.js" | resources.ExecuteAsTemplate "js/staticman.js" $.Site.Params.staticman) -}}
       {{- end -}}
-      {{ if eq hugo.Environment "production" }}
-        {{- $js := $jsSlice | resources.Concat "js/bundle.js" | minify | fingerprint -}}
-        <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
-    {{ else }}
-        {{ $js := $jsSlice | resources.Concat "js/bundle.js" }}
-        <script src="{{ $js.RelPermalink }}" }}></script>
-      {{ end }}
+      {{- $js := $jsSlice | resources.Concat "js/bundle.js" | minify | fingerprint -}}
+    <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}"></script>
     {{- if (fileExists "static/js/add-on.js") -}}
       <script src="{{ "js/add-on.js" | relURL }}"></script>
     {{- end -}}
