@@ -76,7 +76,7 @@
   {{- if .Params.Author -}}
     {{- .Scratch.Set "Author" .Params.Author -}}
   {{- else -}}
-    {{- .Scratch.Set "Author" .Author -}}
+    {{- .Scratch.Set "Author" .Site.Author.name -}}
   {{ end }}
   {{ if .IsHome }}
       <link rel="canonical" href="{{ .Site.Params.CanonicalURL }}{{ .RelPermalink }}" />
