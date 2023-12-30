@@ -6,7 +6,7 @@
       "css/fontawesome.css"
    ],
    "scripts" : [
-      "js/jquery-3.5.1.js",
+      "js/jquery-3.7.1.js",
       "js/lunr.js",
       "js/util.js"
    ]
