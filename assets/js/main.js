@@ -1,47 +1,119 @@
 // Flyout Menu Functions
-var toggles = {
+const toggles = {
   ".search-toggle": "#search-input",
   ".lang-toggle": "#lang-menu",
   ".share-toggle": "#share-menu",
   ".nav-toggle": "#site-nav-menu"
 };
 
-$.each(toggles, function(toggle, menu) {
-  $(toggle).on("click", function() {
-    if ($(menu).hasClass("active")) {
-      $(".menu").removeClass("active");
-      $("#wrapper").removeClass("overlay");
+Object.entries(toggles).forEach(([toggle, menu]) => {
+  /*console.log("Menu is ", menu, ", toggle is ", toggle);*/
+  console.log("Trying to add event listener for toggle ", toggle);
+  /*if (document.querySelector(toggle)) {
+    console.log("Toggle ", toggle, "found, adding listener");
+  $(toggle).on("click", function() {*/
+  let selectedToggles = document.querySelectorAll(toggle);
+  /*if (selectedToggle) {*/
+  selectedToggles.forEach((selectedToggle) => {
+    console.log("selectedToggle has value ", selectedToggle, ", adding click event listener");
+    selectedToggle.addEventListener('click', function () {
+      console.log("Executing click event handler for menu", menu);
+    /*if ($(menu).hasClass("active")) {*/
+    if (document.querySelector(menu).classList.contains("active")) {
+      /*$(".menu").removeClass("active");*/
+      document.querySelector(".menu").classList.remove("active");
+      /*$("#wrapper").removeClass("overlay");*/
+      document.querySelector("#wrapper").classList.remove("overlay");
     } else {
-      $("#wrapper").addClass("overlay");
+      /*$("#wrapper").addClass("overlay");*/
+      document.querySelector("#wrapper").classList.add("overlay");
       $(".menu").not($(menu + ".menu")).removeClass("active");
-      $(menu).addClass("active");
-      if (menu == "#search-input") {$("#search-results").toggleClass("active");}
+      /*$(menu).addClass("active");*/
+      document.querySelector(menu).classList.add("active");
+      if (menu == "#search-input") {
+        /*$("#search-results").toggleClass("active");*/
+        document.querySelector("#search-results").classList.toggle("active");
+      }
     }
+  });
   });
 });
 
 // Click anywhere outside a flyout to close
+/* Jquery based code
 $(document).on("click", function(e) {
   if ($(e.target).is(".lang-toggle, .lang-toggle span, #lang-menu, .share-toggle, .share-toggle i, #share-menu, .search-toggle, .search-toggle i, #search-input, #search-results .mini-post, .nav-toggle, .nav-toggle i, #site-nav") === false) {
     $(".menu").removeClass("active");
     $("#wrapper").removeClass('overlay');
   }
+  });
+*/
+/* Translated code */
+document.addEventListener("click", function(e) {
+  const target = e.target;
+  const menuElements = document.querySelectorAll(".lang-toggle, .lang-toggle span, #lang-menu, .share-toggle, .share-toggle i, #share-menu, .search-toggle, .search-toggle i, #search-input, #search-results .mini-post, .nav-toggle, .nav-toggle i, #site-nav");
+  console.log("Menuelements are", menuElements);
+  console.log("target is", target);
+
+  let keepFlyoutOpen = false;
+  for (const element of document.querySelectorAll(".lang-toggle, .lang-toggle span, #lang-menu, .share-toggle, .share-toggle i, #share-menu, .search-toggle, .search-toggle i, #search-input, #search-results .mini-post, .nav-toggle, .nav-toggle i, #site-nav")) {
+    /*console.log("element is ", element);*/
+    if (element.contains(target))
+      keepFlyoutOpen = true;
+  }
+
+  /*console.log("keepflyoutopen is",keepFlyoutOpen);*/
+
+  /*if (!keepFlyoutOpen) {
+    console.log("Menu is", document.querySelector(".menu"));
+    document.querySelector(".menu").classList.remove("active");
+    console.log("wrapper is", document.querySelector("#wrapper"));
+    document.querySelector("#wrapper").classList.remove("overlay");
+  }*/
+
+  if (!keepFlyoutOpen) {
+    for (const menu of document.querySelectorAll(".menu")) {
+      menu.classList.remove("active");
+    }
+    document.querySelector("#wrapper").classList.remove("overlay");
+  }
 });
 
 // Check to see if the window is top if not then display button
-$(window).scroll(function() {
+/*$(window).scroll(function() {
   if ($(this).scrollTop()) {
     $('#back-to-top').fadeIn();
   } else {
     $('#back-to-top').fadeOut();
   }
+  });*/
+/* Check if window is top, if not show scroll back button
+   Translated from original jquery-based code with Bing Copilot*/
+window.addEventListener("scroll", function() {
+  const backToTop = document.querySelector("#back-to-top");
+  backToTop.style.display = (window.scrollY > 0) ? "block" : "none";
+  /*if (window.scrollY > 0) {
+    backToTop.style.display = "block";
+  } else {
+    backToTop.style.display = "none";
+  }*/
 });
 
+
 // Click event to scroll to top
-$('#back-to-top').click(function() {
+/*$('#back-to-top').click(function() {
   $('html, body').animate({scrollTop: 0}, 1000);
   return false;
+});*/
+
+/*document.querySelector('#back-to-top').addEventListener('click', () => {
+  $('html, body').animate({scrollTop: 0}, 1000);
+  return false;
+  });*/
+document.querySelector('#back-to-top').addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: "smooth", });
 });
+
 
 // Search
 var idx = null;         // Lunr index
@@ -119,7 +191,7 @@ function registerSearchHandler() {
     if ($searchInput.value == '') {
       $searchResults.innerHTML = '';
     }
-  }
+  };
 }
 
 function renderSearchResults(results) {
