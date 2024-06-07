@@ -9,7 +9,7 @@ const toggles = {
 Object.entries(toggles).forEach(([toggle, menu]) => {
   document.querySelectorAll(toggle).forEach((selectedToggle) => {
     selectedToggle.addEventListener('click', function () {
-≈      if (document.querySelector(menu).classList.contains("active")) {
+      if (document.querySelector(menu).classList.contains("active")) {
         document.querySelector(".menu").classList.remove("active");
         document.querySelector("#wrapper").classList.remove("overlay");
       } else {
