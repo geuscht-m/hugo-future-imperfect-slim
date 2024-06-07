@@ -27,7 +27,15 @@ Object.entries(toggles).forEach(([toggle, menu]) => {
     } else {
       /*$("#wrapper").addClass("overlay");*/
       document.querySelector("#wrapper").classList.add("overlay");
-      $(".menu").not($(menu + ".menu")).removeClass("active");
+      //$(".menu").not($(menu + ".menu")).removeClass("active");
+      document.querySelectorAll('.menu').forEach((submenu) => {
+        console.log("submenu.id is", submenu.id);
+        if (menu.localeCompare('#'.concat(submenu.id)) != 0) {
+          console.log("Removing class active from submenu", submenu.id);
+          submenu.classList.remove('active');
+        }
+      });
+      console.log("menu in .not menu is", menu);
       /*$(menu).addClass("active");*/
       document.querySelector(menu).classList.add("active");
       if (menu == "#search-input") {
