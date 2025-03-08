@@ -56,8 +56,8 @@
   {{- end -}}
   {{- .Scratch.Set "Permalink" .Permalink -}}
   {{- .Scratch.Set "Title" .Title -}}
-  {{- if .Params.Author -}}
-    {{- .Scratch.Set "Author" .Params.Author -}}
+  {{- if .Site.Params.Author -}}
+    {{- .Scratch.Set "Author" .Site.Params.Author -}}
   {{- else -}}
     {{- .Scratch.Set "Author" .Site.Author.name -}}
   {{ end }}
