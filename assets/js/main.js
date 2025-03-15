@@ -1,47 +1,63 @@
 // Flyout Menu Functions
-var toggles = {
+const toggles = {
   ".search-toggle": "#search-input",
   ".lang-toggle": "#lang-menu",
   ".share-toggle": "#share-menu",
   ".nav-toggle": "#site-nav-menu"
 };
 
-$.each(toggles, function(toggle, menu) {
-  $(toggle).on("click", function() {
-    if ($(menu).hasClass("active")) {
-      $(".menu").removeClass("active");
-      $("#wrapper").removeClass("overlay");
-    } else {
-      $("#wrapper").addClass("overlay");
-      $(".menu").not($(menu + ".menu")).removeClass("active");
-      $(menu).addClass("active");
-      if (menu == "#search-input") {$("#search-results").toggleClass("active");}
-    }
+Object.entries(toggles).forEach(([toggle, menu]) => {
+  document.querySelectorAll(toggle).forEach((selectedToggle) => {
+    selectedToggle.addEventListener('click', function () {
+      if (document.querySelector(menu).classList.contains("active")) {
+        document.querySelector(".menu").classList.remove("active");
+        document.querySelector("#wrapper").classList.remove("overlay");
+      } else {
+        document.querySelector("#wrapper").classList.add("overlay");
+        document.querySelectorAll('.menu').forEach((submenu) => {
+          if (menu !== '#'.concat(submenu.id)) {
+            submenu.classList.remove('active');
+          }
+        });
+        document.querySelector(menu).classList.add("active");
+        if (menu == "#search-input") {
+          document.querySelector("#search-results").classList.toggle("active");
+        }
+      }
+    });
   });
 });
 
-// Click anywhere outside a flyout to close
-$(document).on("click", function(e) {
-  if ($(e.target).is(".lang-toggle, .lang-toggle span, #lang-menu, .share-toggle, .share-toggle i, #share-menu, .search-toggle, .search-toggle i, #search-input, #search-results .mini-post, .nav-toggle, .nav-toggle i, #site-nav") === false) {
-    $(".menu").removeClass("active");
-    $("#wrapper").removeClass('overlay');
+document.addEventListener("click", function(e) {
+  const target = e.target;
+  const menuElements = document.querySelectorAll(".lang-toggle, .lang-toggle span, #lang-menu, .share-toggle, .share-toggle i, #share-menu, .search-toggle, .search-toggle i, #search-input, #search-results .mini-post, .nav-toggle, .nav-toggle i, #site-nav");
+
+  let keepFlyoutOpen = false;
+  for (const element of document.querySelectorAll(".lang-toggle, .lang-toggle span, #lang-menu, .share-toggle, .share-toggle i, #share-menu, .search-toggle, .search-toggle i, #search-input, #search-results .mini-post, .nav-toggle, .nav-toggle i, #site-nav")) {
+    if (element.contains(target))
+      keepFlyoutOpen = true;
+  }
+
+  if (!keepFlyoutOpen) {
+    for (const menu of document.querySelectorAll(".menu")) {
+      menu.classList.remove("active");
+    }
+    document.querySelector("#wrapper").classList.remove("overlay");
   }
 });
 
 // Check to see if the window is top if not then display button
-$(window).scroll(function() {
-  if ($(this).scrollTop()) {
-    $('#back-to-top').fadeIn();
-  } else {
-    $('#back-to-top').fadeOut();
-  }
+window.addEventListener("scroll", function() {
+  const backToTop = document.querySelector("#back-to-top");
+  backToTop.style.display = (window.scrollY > 0) ? "block" : "none";
 });
 
+
 // Click event to scroll to top
-$('#back-to-top').click(function() {
-  $('html, body').animate({scrollTop: 0}, 1000);
-  return false;
+document.querySelector('#back-to-top').addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: "smooth", });
 });
+
 
 // Search
 var idx = null;         // Lunr index
@@ -119,7 +135,7 @@ function registerSearchHandler() {
     if ($searchInput.value == '') {
       $searchResults.innerHTML = '';
     }
-  }
+  };
 }
 
 function renderSearchResults(results) {
